@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>testFile</title>
+</head>
+<body>
+  <h1>
+    Hello!
+  </h1>
+  
+  <input type="file" id="input"/>
+  <button id="click">Go</button>
+</body>
+</html>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script> -->
+<script src= "https://unpkg.com/xlsx@0.14.0/dist/xlsx.full.min.js"></script>
+
+<script>
+  $('#click').on('click', function(){
+    const file = document.getElementById('input').files[0];
+    parseExcel(file);
+  });
+
+parseExcel = function (file) {
+  var reader = new FileReader();
+
+  reader.onload = function (e) {
+    var data = e.target.result;
+    var workbook = XLSX.read(data, {
+      type: 'binary'
+    });
+    var sheet = [];
+    workbook.SheetNames.forEach(function (sheetName) {
+      // Here is an object that holds our data. 
+      var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+      sheet.push(XL_row_object);
+    });
+    let dataToUpload = sheet[0];
+    console.log(dataToUpload.length);
+    $.ajax({
+      method: 'POST',
+      url: '/uploads/document-upload',
+      data: {
+        name: 'upload',
+        sheet: dataToUpload
+      }
+    })
+  };
+
+  reader.onerror = function (ex) {
+    console.log(ex);
+  };
+
+  reader.readAsBinaryString(file);
+};
+
+</script>
