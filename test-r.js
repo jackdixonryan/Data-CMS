@@ -2,6 +2,7 @@ const firstArr = [1, 2, 3, 4];
 const secondArr = [5, 6, 7, 8];
 const names = ['January', 'February', 'March', 'April'];
 
+// Takes two arrays, one of data and one of labels, and matches them by building an object. 
 const nameVector = (vector, names) => {
   const vLength = vector.length;
   const nLength = names.length;
@@ -16,11 +17,13 @@ const nameVector = (vector, names) => {
   }
 }
 
+// With a label, data, and a label array, constructs a named vector and allows selection of data by key. 
 const selectName = (name, dataVector, labelVector) => {
   const assc = nameVector(dataVector, labelVector);
   return `${name}: ${assc[name]}`
 }
 
+// Same as above, only you can plug in multiple keys and see their values.
 const selectNameRange = (namesArr, dataVector, labelVector) => {
   const assc = nameVector(dataVector, labelVector);
   const res = [];
@@ -30,6 +33,7 @@ const selectNameRange = (namesArr, dataVector, labelVector) => {
   return `${namesArr} \n ${res}`;
 }
 
+// Compares two vectors by index. Will edit this for all operators intead of merely addition. 
 const totalByIndex = (arrOne, arrTwo) => {
   const totaled = [];
   for (let i = 0; i < arrOne.length; i++) {
@@ -38,6 +42,7 @@ const totalByIndex = (arrOne, arrTwo) => {
   return totaled;
 }
 
+// The big M: constructs a matrix based on 4 parameters (byrow / col not yet working): min val, max val, and the number of rows desired, and constructs a matrix from said values.  
 const matrix = (min, max, byrow, nrow) => {
   const range = max - min + 1
   const perRow = range / nrow;
@@ -55,10 +60,25 @@ const matrix = (min, max, byrow, nrow) => {
     focus += perRow;
     slice += perRow;
   }
-  for (let l = 0; l < matrix.length; l++){
-    console.log(matrix[l]);
-  }
+  return matrix;
   // for each row in nrow parameter...
 }
 
-matrix(1, 20, true, 5);
+const exampleMatrix = matrix(1, 9, true, 3);
+console.log(exampleMatrix);
+/*Returns the functional equivalent of: 
+      0  1  2
+0  [  1  2  3  ]
+1  [  4  5  6  ] 
+2  [  7  8  9  ]
+*/
+
+// Translates row/col into base 0 and returns the value at index (x,y) in the matrix.
+const findVal = (matrix, row, col) => {
+  const x = row - 1;
+  const y = col - 1;
+  return matrix[x][y];
+}
+
+// So, findVal at row 1, column 2 for the above matrix = 2;
+const index = findVal(exampleMatrix, 1, 2);
