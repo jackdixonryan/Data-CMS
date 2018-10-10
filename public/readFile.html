@@ -5,22 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>testFile</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
 </head>
 <body>
   <h1>
-    Hello!
+    View Your Data!
   </h1>
-  
-  <input type="file" id="input"/>
-  <button id="click">Go</button>
+  <div class="row">
+    <div class="col s6">
+      <div class="file-field input-field">
+        <div class="btn orange">
+          <span>Select a File</span>
+          <input type="file" id="input"/>
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text" id="spread-name"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s8">
+    <a id="click" class="btn orange waves-effect col s12">Go</a>
+    </div>
+  </div>
+  <canvas id="chart"></canvas>
 </body>
 </html>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script src= "https://unpkg.com/xlsx@0.14.0/dist/xlsx.full.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script>
   $('#click').on('click', function(){
     const file = document.getElementById('input').files[0];
@@ -42,13 +58,14 @@ parseExcel = function (file) {
       sheet.push(XL_row_object);
     });
     let dataToUpload = sheet[0];
-    console.log(dataToUpload.length);
+    console.log(dataToUpload);
+    const user = "5bbd3a30305e926c74ee7108";
     $.ajax({
       method: 'POST',
-      url: '/uploads/document-upload',
+      url: `/api/users/${user}/data`,
       data: {
-        name: 'upload',
-        sheet: dataToUpload
+        name: $('#spread-name').val(),
+        data: dataToUpload
       }
     })
   };
@@ -59,5 +76,16 @@ parseExcel = function (file) {
 
   reader.readAsBinaryString(file);
 };
+
+const id = "5bbd3a30305e926c74ee7108";
+$.get(`/api/users/${id}/data`, function(data, err){
+  if (err) console.log(err);
+  // Why I have done this to myself I do not know. Look at this spaghetti nonsense that I'm too lazy to fix.
+  console.log(data[0][0].name);
+  console.log(data[0][0].data[0]);
+  for (property in data[0][0].data[0]) {
+    console.log(property);
+  }
+}); 
 
 </script>
