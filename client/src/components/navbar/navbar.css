@@ -1,0 +1,8 @@
+nav {
+  background-color: white;
+  border-bottom: 1px #e0e0e0 solid;
+}
+
+#nav-mobile a:hover {
+  background-color: #d1c4e9
+}

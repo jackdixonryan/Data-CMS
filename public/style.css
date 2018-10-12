@@ -1,0 +1,59 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: 'helvetica'
+}
+nav {
+  background-color: limegreen;
+  padding: 20px;
+  height: 50px;
+  width: 100%;
+}
+
+.nav {
+  list-style: none;
+  height: 15px;
+  width: 100%;
+  margin-left: 20px;
+  margin-right: 0;
+}
+
+nav ul li {
+  padding: 15px;
+  display: inline-block;
+  background-color: lightgreen;
+}
+
+.navlink {
+  font-size: 15px;
+  color: white;
+  text-decoration: none;
+}
+
+#main {
+  padding: 20px;
+}
+
+.google {
+  width: 40%;
+  background-color: skyblue;
+  border: 1px gray solid;
+  text-decoration: none;
+  color: gray;
+  font-size: 20px;
+  padding: 10px;
+}
+
+.github {
+  width: 40%;
+  background-color: coral;
+  border: 1px black solid;
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
+  padding: 10px;
+}
+
+main {
+  padding: 20px;
+}

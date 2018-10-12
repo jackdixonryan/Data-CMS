@@ -6,6 +6,9 @@ const UserSchema = new Schema ({
     type: String,
     required: true
   },
+  googleID: {
+    type: String
+  },
   datasets: [
     { 
       type: Schema.Types.ObjectId,
@@ -13,6 +16,7 @@ const UserSchema = new Schema ({
     }
   ]
 });
+
 
 const User = mongoose.model('User', UserSchema);
 
